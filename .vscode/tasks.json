@@ -1,0 +1,40 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Build",
+      "type": "shell",
+      "command": "cmake",
+      "args": ["--build", ".", "--config", "Debug"],
+      "options": {
+        "cwd": "${workspaceRoot}/build"
+      },
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    },
+    {
+      "label": "Test",
+      "type": "shell",
+      "command": "ctest",
+      "args": ["--build-config", "Debug"],
+      "options": {
+        "cwd": "${workspaceRoot}/build"
+      },
+      "group": {
+        "kind": "test",
+        "isDefault": true
+      }
+    },
+    {
+      "label": "Run",
+      "type": "shell",
+      "command": "apps/loxapp",
+      "options": {
+        "cwd": "${workspaceRoot}/build"
+      },
+      "problemMatcher": []
+    }
+  ]
+}
