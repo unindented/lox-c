@@ -1,28 +1,36 @@
-#include <minunit/minunit.h>
-#include <stdio.h>
+#include <check.h>
+#include <stdlib.h>
 
-int tests_run = 0;
+START_TEST(test_something) {
+  ck_assert_int_eq(1, 1);
+}
+END_TEST
 
-static char *test_something() {
-  mu_assert("something", 1 == 1);
-  return 0;
+Suite *test_suite(void) {
+  Suite *s;
+  TCase *tc_core;
+
+  s = suite_create("test");
+
+  tc_core = tcase_create("Core");
+
+  tcase_add_test(tc_core, test_something);
+  suite_add_tcase(s, tc_core);
+
+  return s;
 }
 
-static char *all_tests() {
-  mu_run_test(test_something);
-  return 0;
-}
+int main(void) {
+  int number_failed;
+  Suite *s;
+  SRunner *sr;
 
-int main(int argc, char **argv) {
-  char *result = all_tests();
+  s = test_suite();
+  sr = srunner_create(s);
 
-  printf("1..%d\n", tests_run);
+  srunner_run_all(sr, CK_NORMAL);
+  number_failed = srunner_ntests_failed(sr);
+  srunner_free(sr);
 
-  if (result != 0) {
-    printf("not ok - %s\n", result);
-  } else {
-    printf("ok\n");
-  }
-
-  return result != 0;
+  return (number_failed == 0) ? EXIT_SUCCESS : EXIT_FAILURE;
 }

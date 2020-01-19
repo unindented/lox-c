@@ -27,6 +27,13 @@ if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
   include(CTest)
 endif()
 
+# `FetchContent` was added in CMake 3.11
+include(FetchContent)
+# `FetchContent_MakeAvailable` was not added until CMake 3.14
+if(${CMAKE_VERSION} VERSION_LESS 3.14)
+  include(cmake/FetchContent_MakeAvailable.cmake)
+endif()
+
 add_subdirectory(src)
 
 add_subdirectory(apps)
